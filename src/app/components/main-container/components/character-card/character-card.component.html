@@ -1,0 +1,21 @@
+@let characterLocal = character();
+
+@if (characterLocal) {
+  <div class="character-card">
+    <h3>{{ characterLocal.name }}</h3>
+
+    <img
+      [src]="characterLocal.image"
+      [alt]="characterLocal.name"
+      class="character-image"
+    />
+
+    <h2>Character: {{ characterLocal.name }} Info</h2>
+
+    <button (click)="removeCharacter(characterLocal.id)">
+      Remove Character
+    </button>
+
+    <button (click)="editCharacter()">Edit Character</button>
+  </div>
+}
