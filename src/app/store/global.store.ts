@@ -31,9 +31,7 @@ export const GlobalStore = signalStore(
   withState(() => inject(STORE_STATE)),
   withMethods((store, charactersService = inject(CharactersService)) => ({
     getCharacter(characterId: number) {
-      return store.characters().find((char) => {
-        return char.id === characterId;
-      });
+      return store.characters().find((char) => char.id === characterId);
     },
     async addCharacter(character: Character): Promise<void> {
       try {
