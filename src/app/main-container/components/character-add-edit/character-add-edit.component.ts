@@ -4,7 +4,6 @@ import {
   computed,
   inject,
   input,
-  output,
   Signal,
 } from '@angular/core';
 import {
@@ -39,8 +38,6 @@ export class CharacterAddEditComponent {
     () => this.store.getCharacter(Number(this.id())) ?? emptyCharacter,
   );
 
-  clickOut = output<boolean>();
-
   characterForm: Signal<FormGroup> = computed(
     () =>
       new FormGroup<CharacterForm>({
@@ -61,6 +58,7 @@ export class CharacterAddEditComponent {
         const updatedCharacter: Character = {
           ...this.characterForm().value,
         };
+
         this.store.updateCharacter({
           ...this.characterToEdit(),
           ...updatedCharacter,
@@ -70,11 +68,11 @@ export class CharacterAddEditComponent {
           id: Date.now(),
           ...this.characterForm().value,
         };
+
         this.store.addCharacter(newCharacter);
       }
 
       this.characterForm().reset();
-      this.clickOut.emit(true);
     }
   }
 }
