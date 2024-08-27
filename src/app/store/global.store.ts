@@ -41,6 +41,7 @@ export const GlobalStore = signalStore(
 
         patchState(store, ({ characters }) => ({
           characters: [...characters, character],
+          isLoading: false,
         }));
       } catch (_error) {}
     },
@@ -52,6 +53,7 @@ export const GlobalStore = signalStore(
 
         patchState(store, ({ characters }) => ({
           characters: characters.filter((char) => char.id !== characterId),
+          isLoading: false,
         }));
       } catch (_error) {}
     },
@@ -68,6 +70,7 @@ export const GlobalStore = signalStore(
           characters: characters.map((char) =>
             char.id === updatedCharacter.id ? updatedCharacter : char,
           ),
+          isLoading: false,
         }));
       } catch (_error) {}
     },
