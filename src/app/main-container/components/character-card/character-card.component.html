@@ -12,10 +12,12 @@
 
     <h2>Character: {{ characterLocal.name }} Info</h2>
 
-    <button (click)="removeCharacter(characterLocal.id)">
-      Remove Character
-    </button>
+    <div class="button-container">
+      <button (click)="removeCharacter(characterLocal.id)">
+        Remove Character
+      </button>
 
-    <button (click)="editCharacter()">Edit Character</button>
+      <button (click)="editCharacter()">Edit Character</button>
+    </div>
   </div>
 }

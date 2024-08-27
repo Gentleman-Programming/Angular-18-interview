@@ -1,11 +1,11 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Character } from '../../models/character.model';
 import {
   CharacterAddEditComponent,
   CharacterCardComponent,
 } from './components';
 import { GlobalStore } from '@app/store/global.store';
+import { Character } from '@app/models';
 
 @Component({
   selector: 'app-main-container',

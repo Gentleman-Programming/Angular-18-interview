@@ -10,6 +10,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { CustomInputComponent } from '@app/components/custom-input';
 import { Character, emptyCharacter } from '@app/models';
 import { GlobalStore } from '@app/store';
 
@@ -21,7 +22,7 @@ interface CharacterForm {
 @Component({
   selector: 'app-character-add-edit',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CustomInputComponent],
   templateUrl: './character-add-edit.component.html',
   styleUrls: ['./character-add-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

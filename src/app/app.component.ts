@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MainContainerComponent } from './components/main-container/main-container.component';
+import { MainContainerComponent } from './main-container/main-container.component';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,7 @@ import { MainContainerComponent } from './components/main-container/main-contain
   imports: [RouterOutlet, MainContainerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   title = 'Angular18Interview';
