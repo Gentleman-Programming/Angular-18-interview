@@ -10,6 +10,4 @@ import { MainContainerComponent } from './main-container/main-container.componen
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
-  title = 'Angular18Interview';
-}
+export class AppComponent {}
