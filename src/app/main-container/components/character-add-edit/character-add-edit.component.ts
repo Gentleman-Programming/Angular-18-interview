@@ -32,10 +32,13 @@ interface CharacterForm {
 })
 export class CharacterAddEditComponent {
   id = input.required<number>();
+
   readonly store = inject(GlobalStore);
+
   characterToEdit = computed(
     () => this.store.getCharacter(Number(this.id())) ?? emptyCharacter,
   );
+
   clickOut = output<boolean>();
 
   characterForm: Signal<FormGroup> = computed(
