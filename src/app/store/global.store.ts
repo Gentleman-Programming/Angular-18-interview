@@ -1,19 +1,23 @@
 import { inject, InjectionToken } from '@angular/core';
-import { Character, emptyCharacter } from '@app/models';
+import { Character } from '@app/models';
 import { CharactersService } from '@app/services';
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import {
+  patchState,
+  signalStore,
+  withHooks,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 import { lastValueFrom } from 'rxjs';
 
 type StoreState = {
   characters: Character[];
-  characterToEdit: Character;
   isLoading: boolean;
   filter: { query: string; order: 'asc' | 'desc' };
 };
 
 const initialState: StoreState = {
   characters: [],
-  characterToEdit: emptyCharacter,
   isLoading: false,
   filter: { query: '', order: 'asc' },
 };
@@ -26,17 +30,10 @@ export const GlobalStore = signalStore(
   { providedIn: 'root' },
   withState(() => inject(STORE_STATE)),
   withMethods((store, charactersService = inject(CharactersService)) => ({
-    async loadCharacters(): Promise<void> {
-      patchState(store, { isLoading: true });
-
-      const characters = await lastValueFrom(
-        charactersService.getAllCharacters(),
-      );
-
-      patchState(store, { characters, isLoading: false });
-    },
-    editCharacter(characterToEdit: Character): void {
-      patchState(store, { characterToEdit });
+    getCharacter(characterId: number) {
+      return store.characters().find((char) => {
+        return char.id === characterId;
+      });
     },
     async addCharacter(character: Character): Promise<void> {
       try {
@@ -77,4 +74,15 @@ export const GlobalStore = signalStore(
       } catch (_error) {}
     },
   })),
+  withHooks({
+    async onInit(store, charactersService = inject(CharactersService)) {
+      patchState(store, { isLoading: true });
+
+      const characters = await lastValueFrom(
+        charactersService.getAllCharacters(),
+      );
+
+      patchState(store, { characters, isLoading: false });
+    },
+  }),
 );

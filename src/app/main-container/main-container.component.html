@@ -1,26 +1,13 @@
 <div class="character-grid">
-  <button (click)="changeLogic(1)">Show all Characters</button>
-  <button (click)="changeLogic(2)">Add new Character</button>
-
-  @switch (logicNumber) {
-    @case (1) {
-      @defer (when store.characters()) {
-        @for (character of store.characters(); track character.id) {
-          @defer (on viewport) {
-            <app-character-card
-              [character]="character"
-              (clickOut)="changeLogic(2)"
-            ></app-character-card>
-          } @placeholder {
-            <div class="placeholder">Loading</div>
-          }
-        }
+  @defer (when store.characters()) {
+    @for (character of store.characters(); track character.id) {
+      @defer (on viewport) {
+        <app-character-card [character]="character"></app-character-card>
       } @placeholder {
-        <div>Loading...</div>
+        <div class="placeholder">Loading</div>
       }
     }
-    @case (2) {
-      <app-character-add-edit (clickOut)="changeLogic(1)" />
-    }
+  } @placeholder {
+    <div>Loading...</div>
   }
 </div>

@@ -20,10 +20,6 @@ export class MainContainerComponent {
   logicNumber: number = 1;
   readonly store = inject(GlobalStore);
 
-  constructor() {
-    this.store.loadCharacters();
-  }
-
   changeLogic(logicNumber: number) {
     this.logicNumber = logicNumber;
   }

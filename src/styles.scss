@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-button {
+button,
+a {
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
@@ -7,6 +8,7 @@ button {
   color: white;
   font-size: 1rem;
   cursor: pointer;
+  text-decoration: none;
 
   &:disabled {
     background-color: #ddd;

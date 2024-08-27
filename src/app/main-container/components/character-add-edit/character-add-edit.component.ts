@@ -1,8 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
+  input,
   output,
+  Signal,
 } from '@angular/core';
 import {
   FormControl,
@@ -28,40 +31,46 @@ interface CharacterForm {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CharacterAddEditComponent {
+  id = input.required<number>();
   readonly store = inject(GlobalStore);
+  characterToEdit = computed(
+    () => this.store.getCharacter(Number(this.id())) ?? emptyCharacter,
+  );
   clickOut = output<boolean>();
 
-  characterForm: FormGroup = new FormGroup<CharacterForm>({
-    name: new FormControl(this.store.characterToEdit().name, {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    image: new FormControl(this.store.characterToEdit().image, {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-  });
+  characterForm: Signal<FormGroup> = computed(
+    () =>
+      new FormGroup<CharacterForm>({
+        name: new FormControl(this.characterToEdit().name, {
+          nonNullable: true,
+          validators: [Validators.required],
+        }),
+        image: new FormControl(this.characterToEdit().image, {
+          nonNullable: true,
+          validators: [Validators.required],
+        }),
+      }),
+  );
 
   onSubmit(): void {
-    if (this.characterForm.valid) {
-      if (this.store.characterToEdit()) {
+    if (this.characterForm().valid) {
+      if (this.characterToEdit()) {
         const updatedCharacter: Character = {
-          ...this.characterForm.value,
+          ...this.characterForm().value,
         };
         this.store.updateCharacter({
-          ...this.store.characterToEdit(),
+          ...this.characterToEdit(),
           ...updatedCharacter,
         });
-        this.store.editCharacter(emptyCharacter);
       } else {
         const newCharacter: Character = {
           id: Date.now(),
-          ...this.characterForm.value,
+          ...this.characterForm().value,
         };
         this.store.addCharacter(newCharacter);
       }
 
-      this.characterForm.reset();
+      this.characterForm().reset();
       this.clickOut.emit(true);
     }
   }
