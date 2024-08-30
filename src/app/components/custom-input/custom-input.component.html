@@ -4,7 +4,6 @@
     [formControl]="control()"
     [type]="type()"
     [attr.placeholder]="placeHolder()"
-    placeholder="Enter character name"
   />
   @if (control().invalid && control().touched) {
     <small class="error">{{ errorMessage() }}</small>

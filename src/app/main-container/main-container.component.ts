@@ -16,11 +16,5 @@ import { Character } from '@app/models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainContainerComponent {
-  characterInfo: Record<string, Character> = {};
-  logicNumber: number = 1;
   readonly store = inject(GlobalStore);
-
-  changeLogic(logicNumber: number) {
-    this.logicNumber = logicNumber;
-  }
 }
