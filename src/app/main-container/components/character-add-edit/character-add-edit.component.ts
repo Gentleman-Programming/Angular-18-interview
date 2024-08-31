@@ -54,7 +54,7 @@ export class CharacterAddEditComponent {
 
   onSubmit(): void {
     if (this.characterForm().valid) {
-      if (this.characterToEdit()) {
+      if (this.id()) {
         const updatedCharacter: Character = {
           ...this.characterForm().value,
         };

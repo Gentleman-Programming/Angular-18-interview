@@ -20,7 +20,7 @@ const initialState: StoreState = {
   isLoading: false,
 };
 
-const STORE_STATE = new InjectionToken<StoreState>('CharacterState', {
+const STORE_STATE = new InjectionToken<StoreState>('GlobalStore', {
   factory: () => initialState,
 });
 
