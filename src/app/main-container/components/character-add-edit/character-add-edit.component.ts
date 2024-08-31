@@ -54,25 +54,18 @@ export class CharacterAddEditComponent {
 
   onSubmit(): void {
     if (this.characterForm().valid) {
-      if (this.id()) {
-        const updatedCharacter: Character = {
-          ...this.characterForm().value,
-        };
+      if (this.characterForm().valid) {
+        const character = {
+          ...(this.id() ? { id: String(Date.now()) } : {}),
+          ...this.characterForm().value
+        }
 
-        this.store.updateCharacter({
-          ...this.characterToEdit(),
-          ...updatedCharacter,
-        });
-      } else {
-        const newCharacter: Character = {
-          id: Date.now(),
-          ...this.characterForm().value,
-        };
+        const methodToUse = this.id() ? "updateCharacter" : "addCharacter";
 
-        this.store.addCharacter(newCharacter);
+        this.store[methodToUse](character)
+
+        this.characterForm().reset()
       }
-
-      this.characterForm().reset();
     }
   }
 }
