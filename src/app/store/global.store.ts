@@ -13,13 +13,11 @@ import { lastValueFrom } from 'rxjs';
 type StoreState = {
   characters: Character[];
   isLoading: boolean;
-  filter: { query: string; order: 'asc' | 'desc' };
 };
 
 const initialState: StoreState = {
   characters: [],
   isLoading: false,
-  filter: { query: '', order: 'asc' },
 };
 
 const STORE_STATE = new InjectionToken<StoreState>('CharacterState', {
@@ -43,7 +41,7 @@ export const GlobalStore = signalStore(
           characters: [...characters, character],
           isLoading: false,
         }));
-      } catch (_error) {}
+      } catch (_error) { }
     },
     async removeCharacter(characterId: number): Promise<void> {
       try {
@@ -55,7 +53,7 @@ export const GlobalStore = signalStore(
           characters: characters.filter((char) => char.id !== characterId),
           isLoading: false,
         }));
-      } catch (_error) {}
+      } catch (_error) { }
     },
     async updateCharacter(updatedCharacter: Character): Promise<void> {
       // call api to remove a character and if success, remove it from the store
@@ -72,7 +70,7 @@ export const GlobalStore = signalStore(
           ),
           isLoading: false,
         }));
-      } catch (_error) {}
+      } catch (_error) { }
     },
   })),
   withHooks({
