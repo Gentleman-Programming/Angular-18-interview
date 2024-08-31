@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable } from 'rxjs';
 import { Character, CharacterInfo } from '../models';
@@ -10,8 +10,7 @@ import { CharacterAdapter } from '@app/adapters';
 export class CharactersService {
   private readonly baseUrl: string =
     'https://rickandmortyapi.com/api/character';
-
-  constructor(private http: HttpClient) {}
+  http = inject(HttpClient)
 
   getAllCharacters(): Observable<Character[]> {
     return this.http
