@@ -23,12 +23,12 @@ export class CharactersService {
     return this.http.get<Character>(url);
   }
 
-  removeCharacter(id: number): Observable<void | Object> {
+  removeCharacter(id: number): Observable<void> {
     const url = `${this.baseUrl}/${id}`;
-    return this.http.delete(url).pipe(
+    return this.http.delete<void>(url).pipe(
       catchError((_error) => {
         console.log('error prevented for testing');
-        return Promise.resolve({ status: 200 });
+        return Promise.resolve();
       }),
     );
   }

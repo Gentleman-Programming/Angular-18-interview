@@ -66,7 +66,7 @@ export const GlobalStore = signalStore(
 
         patchState(store, ({ characters }) => ({
           characters: characters.map((char) =>
-            char.id === updatedCharacter.id ? updatedCharacter : char,
+            char.id === updatedCharacter.id ? { ...char, ...updatedCharacter } : char,
           ),
           isLoading: false,
         }));
