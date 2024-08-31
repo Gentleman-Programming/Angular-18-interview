@@ -56,7 +56,7 @@ export class CharacterAddEditComponent {
     if (this.characterForm().valid) {
       if (this.characterForm().valid) {
         const character = {
-          ...(this.id() ? { id: String(Date.now()) } : {}),
+          ...(this.id() ? { id: Number(this.id()) } : { id: Date.now() }),
           ...this.characterForm().value
         }
 
