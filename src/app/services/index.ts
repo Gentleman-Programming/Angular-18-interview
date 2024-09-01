@@ -1,1 +1,1 @@
-export * from './characters.service'
+export * from './character.service'

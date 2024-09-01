@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import {
-  CharacterAddEditComponent,
-  CharacterCardComponent,
-} from './components';
-import { GlobalStore } from '@app/store/global.store';
+import { GlobalStore } from '@app/store';
+import { CharacterCardComponent } from './components';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-main-container',
   standalone: true,
-  imports: [CharacterCardComponent, CharacterAddEditComponent],
+  imports: [CharacterCardComponent, RouterLink],
   templateUrl: './main-container.component.html',
   styleUrl: './main-container.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

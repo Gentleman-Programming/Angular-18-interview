@@ -12,7 +12,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
     provideClientHydration(),
-    provideHttpClient(withFetch()),
     provideExperimentalZonelessChangeDetection(),
+    provideHttpClient(withFetch()),
   ],
 };

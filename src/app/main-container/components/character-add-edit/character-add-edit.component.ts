@@ -6,15 +6,15 @@ import {
   input,
   Signal,
 } from '@angular/core';
+import { GlobalStore } from '@app/store';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CustomInputComponent } from '@app/components/custom-input';
-import { Character, emptyCharacter } from '@app/models';
-import { GlobalStore } from '@app/store';
+import { emptyCharacter } from '@app/models';
+import { CustomInputComponent } from '@app/components';
 
 interface CharacterForm {
   name: FormControl<string>;
@@ -26,11 +26,11 @@ interface CharacterForm {
   standalone: true,
   imports: [ReactiveFormsModule, CustomInputComponent],
   templateUrl: './character-add-edit.component.html',
-  styleUrls: ['./character-add-edit.component.scss'],
+  styleUrl: './character-add-edit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CharacterAddEditComponent {
-  id = input.required<number>();
+  id = input<number>();
 
   readonly store = inject(GlobalStore);
 
@@ -54,18 +54,16 @@ export class CharacterAddEditComponent {
 
   onSubmit(): void {
     if (this.characterForm().valid) {
-      if (this.characterForm().valid) {
-        const character = {
-          ...(this.id() ? { id: Number(this.id()) } : { id: Date.now() }),
-          ...this.characterForm().value
-        }
+      const character = {
+        ...(this.id() ? { id: Number(this.id()) } : {}),
+        ...this.characterForm().value,
+      };
 
-        const methodToUse = this.id() ? "updateCharacter" : "addCharacter";
+      const methodToUse = this.id() ? 'updateCharacter' : 'addCharacter';
 
-        this.store[methodToUse](character)
+      this.store[methodToUse](character);
 
-        this.characterForm().reset()
-      }
+      this.characterForm().reset();
     }
   }
 }

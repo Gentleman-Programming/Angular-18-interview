@@ -3,12 +3,16 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Angular18Interview": {
+    "interview-angular": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
-          "changeDetection": "OnPush"
+          "changeDetection": "OnPush",
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
         }
       },
       "root": "",
@@ -18,7 +22,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/angular18-interview",
+            "outputPath": "dist/interview-angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [],
@@ -68,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Angular18Interview:build:production"
+              "buildTarget": "interview-angular:build:production"
             },
             "development": {
-              "buildTarget": "Angular18Interview:build:development"
+              "buildTarget": "interview-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -101,6 +105,6 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": "3a299bc9-59fd-4c91-9719-b38e83853884"
   }
 }

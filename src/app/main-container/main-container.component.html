@@ -1,13 +1,14 @@
+<a routerLink="/add-edit-character">Add Character</a>
 <div class="character-grid">
-  @defer (when store.characters()) {
+  @defer (when store.characters().length) {
     @for (character of store.characters(); track character.id) {
       @defer (on viewport) {
-        <app-character-card [character]="character"></app-character-card>
+        <app-character-card [character]="character" />
       } @placeholder {
         <div class="placeholder">Loading</div>
       }
     }
   } @placeholder {
-    <div>Loading...</div>
+    <div class="placeholder">Loading</div>
   }
 </div>

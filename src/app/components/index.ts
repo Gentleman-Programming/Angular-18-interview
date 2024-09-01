@@ -1,2 +1,1 @@
-export * from './custom-input';
-export * from './page-not-found'
+export * from './custom-input/custom-input.component';

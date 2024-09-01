@@ -2,22 +2,24 @@
 
 @if (characterLocal) {
   <div class="character-card">
-    <h3>{{ characterLocal.name }}</h3>
+    <p>{{ characterLocal.name }}</p>
 
     <img
-      [src]="characterLocal.image"
-      [alt]="characterLocal.name"
       class="character-image"
+      [ngSrc]="characterLocal.image"
+      width="200"
+      height="200"
+      [alt]="characterLocal.name"
     />
-
-    <h2>Character: {{ characterLocal.name }}</h2>
 
     <div class="button-container">
       <button (click)="removeCharacter(characterLocal.id)">
         Remove Character
       </button>
 
-      <a [routerLink]="[characterLocal.id]">Edit Character</a>
+      <a [routerLink]="['/add-edit-character/' + characterLocal.id]"
+        >Edit Character</a
+      >
     </div>
   </div>
 }

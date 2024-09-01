@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { PageNotFoundComponent } from './components';
 
 export const routes: Routes = [
   {
@@ -15,14 +14,17 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'characters/:id',
+    path: 'add-edit-character',
     loadComponent: () =>
       import(
         './main-container/components/character-add-edit/character-add-edit.component'
       ).then((m) => m.CharacterAddEditComponent),
   },
   {
-    path: '**',
-    component: PageNotFoundComponent,
+    path: 'add-edit-character/:id',
+    loadComponent: () =>
+      import(
+        './main-container/components/character-add-edit/character-add-edit.component'
+      ).then((m) => m.CharacterAddEditComponent),
   },
 ];

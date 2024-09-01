@@ -1,4 +1,9 @@
-import { Info } from './api.model';
+export interface Info {
+  count: number;
+  pages: number;
+  next: string;
+  prev: string;
+}
 
 export enum Gender {
   'MALE' = 'Male',
@@ -17,8 +22,9 @@ export interface LinkedElement {
   link: string;
 }
 
-export interface Origin extends LinkedElement {}
-export interface Location extends LinkedElement {}
+export interface Origin extends LinkedElement { }
+export interface Location extends LinkedElement { }
+
 
 export interface Character {
   id: number;

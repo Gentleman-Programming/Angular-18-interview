@@ -1,13 +1,13 @@
+import { NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   inject,
   input,
 } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Character } from '@app/models';
 import { GlobalStore } from '@app/store';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-character-card',
@@ -22,7 +22,7 @@ export class CharacterCardComponent {
 
   readonly store = inject(GlobalStore);
 
-  removeCharacter(characterId: number) {
-    this.store.removeCharacter(characterId);
+  removeCharacter(id: number) {
+    this.store.removeCharacter(id);
   }
 }

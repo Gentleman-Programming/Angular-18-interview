@@ -1,6 +1,6 @@
 import { inject, InjectionToken } from '@angular/core';
 import { Character } from '@app/models';
-import { CharactersService } from '@app/services';
+import { CharacterService } from '@app/services';
 import {
   patchState,
   signalStore,
@@ -8,16 +8,15 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
+import { withEntities } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
 
 type StoreState = {
   characters: Character[];
-  isLoading: boolean;
 };
 
 const initialState: StoreState = {
   characters: [],
-  isLoading: false,
 };
 
 const STORE_STATE = new InjectionToken<StoreState>('GlobalStore', {
@@ -27,61 +26,55 @@ const STORE_STATE = new InjectionToken<StoreState>('GlobalStore', {
 export const GlobalStore = signalStore(
   { providedIn: 'root' },
   withState(() => inject(STORE_STATE)),
-  withMethods((store, charactersService = inject(CharactersService)) => ({
-    getCharacter(characterId: number) {
-      return store.characters().find((char) => char.id === characterId);
+  withEntities<Character>(),
+  withMethods((store, characterService = inject(CharacterService)) => ({
+    getCharacter(id: number) {
+      return store.characters().find((char) => char.id === id);
     },
-    async addCharacter(character: Character): Promise<void> {
-      try {
-        patchState(store, { isLoading: true });
 
-        await lastValueFrom(charactersService.addCharacter(character));
+    async addCharacter(character: Omit<Character, 'id'>) {
+      try {
+        await lastValueFrom(characterService.addCharacter(character));
 
         patchState(store, ({ characters }) => ({
-          characters: [...characters, character],
-          isLoading: false,
+          characters: [
+            ...characters,
+            { id: new Date().getTime(), ...character },
+          ],
         }));
-      } catch (_error) { }
+      } catch (error) {}
     },
-    async removeCharacter(characterId: number): Promise<void> {
-      try {
-        patchState(store, { isLoading: true });
 
-        await lastValueFrom(charactersService.removeCharacter(characterId));
+    async removeCharacter(id: number) {
+      try {
+        await lastValueFrom(characterService.removeCharacter(id));
 
         patchState(store, ({ characters }) => ({
-          characters: characters.filter((char) => char.id !== characterId),
-          isLoading: false,
+          characters: characters.filter((char) => char.id !== id),
         }));
-      } catch (_error) { }
+      } catch (error) {}
     },
-    async updateCharacter(updatedCharacter: Character): Promise<void> {
-      // call api to remove a character and if success, remove it from the store
-      try {
-        patchState(store, { isLoading: true });
 
-        await lastValueFrom(
-          charactersService.updateCharacter(updatedCharacter),
-        );
+    async updateCharacter(character: Character) {
+      try {
+        await lastValueFrom(characterService.updateCharacter(character));
 
         patchState(store, ({ characters }) => ({
           characters: characters.map((char) =>
-            char.id === updatedCharacter.id ? { ...char, ...updatedCharacter } : char,
+            char.id === character.id ? { ...char, ...character } : char,
           ),
           isLoading: false,
         }));
-      } catch (_error) { }
+      } catch (error) {}
     },
   })),
   withHooks({
-    async onInit(store, charactersService = inject(CharactersService)) {
-      patchState(store, { isLoading: true });
-
+    async onInit(store, characterService = inject(CharacterService)) {
       const characters = await lastValueFrom(
-        charactersService.getAllCharacters(),
+        characterService.getAllCharacters(),
       );
 
-      patchState(store, { characters, isLoading: false });
+      patchState(store, { characters });
     },
   }),
 );
